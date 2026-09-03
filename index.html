@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nexstrike — Tactical FPS</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#070a0f;color:#fff;font-family:Arial,sans-serif}canvas{display:block;width:100%;height:100%;cursor:crosshair}#hud{position:fixed;inset:0;pointer-events:none}.top{display:flex;justify-content:space-between;padding:22px 28px;font-weight:800;letter-spacing:2px;text-shadow:0 2px 8px #000}.brand{font-size:22px}.score{font-size:16px}.cross{position:absolute;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%)}.cross:before,.cross:after{content:"";position:absolute;background:#fff;box-shadow:0 0 8px #fff}.cross:before{width:2px;height:20px;left:9px}.cross:after{height:2px;width:20px;top:9px}.bottom{position:absolute;left:28px;bottom:25px}.hp{font-size:28px;font-weight:900}.bar{width:220px;height:8px;background:#222;border-radius:10px;overflow:hidden;margin-top:7px}.bar i{display:block;width:100%;height:100%;background:#64e572}.weapon{position:absolute;right:28px;bottom:25px;text-align:right}.ammo{font-size:38px;font-weight:900}.name{font-size:13px;letter-spacing:3px;opacity:.7}.tip{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);font-size:12px;opacity:.6;letter-spacing:1px}.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}.hit{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);font-size:28px;font-weight:900;opacity:0}.menu{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#172333 0,#05070b 70%);pointer-events:auto}.panel{text-align:center}.panel h1{font-size:64px;margin:0 0 8px;letter-spacing:10px}.panel p{opacity:.6;letter-spacing:3px}.panel button{margin-top:25px;padding:15px 35px;border:0;border-radius:6px;background:#fff;color:#070a0f;font-weight:900;letter-spacing:2px;cursor:pointer}.panel button:hover{transform:scale(1.04)}
+</style>
+</head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud"><div class="top"><div class="brand">NEXSTRIKE</div><div class="score" id="score">SCORE 000000</div></div><div class="cross"></div><div class="bottom"><div class="hp" id="hp">100</div><div class="bar"><i id="bar"></i></div></div><div class="weapon"><div class="ammo" id="ammo">30 / 120</div><div class="name">NX-9 // ASSAULT</div></div><div class="tip">WASD MOVE · MOUSE AIM · CLICK FIRE · R RELOAD</div><div class="flash" id="flash"></div><div class="hit" id="hit">+100</div></div>
+<div class="menu" id="menu"><div class="panel"><h1>NEXSTRIKE</h1><p>TACTICAL COMBAT // TRAINING GROUND</p><button id="start">ENTER MISSION</button></div></div>
+<script>
+const c=document.getElementById('game'),x=c.getContext('2d');let W,H,playing=false,ammo=30,score=0,hp=100,reloading=false,enemies=[];const keys={};
+function resize(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);W=innerWidth;H=innerHeight}addEventListener('resize',resize);resize();
+function spawn(){enemies.push({x:W*.18+Math.random()*W*.64,y:H*.22+Math.random()*H*.48,s:28+Math.random()*18,h:100,alive:true,t:Math.random()*6})}for(let i=0;i<5;i++)spawn();
+function draw(){x.clearRect(0,0,W,H);let g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#101a28');g.addColorStop(.55,'#17202b');g.addColorStop(1,'#080b10');x.fillStyle=g;x.fillRect(0,0,W,H);x.fillStyle='#263443';x.fillRect(0,H*.67,W,H*.33);x.strokeStyle='rgba(255,255,255,.08)';x.lineWidth=1;for(let i=0;i<14;i++){let yy=H*.67+i*i*3.2;x.beginPath();x.moveTo(0,yy);x.lineTo(W,yy);x.stroke()}for(const e of enemies){if(!e.alive)continue;e.t+=.016;let bob=Math.sin(e.t*2)*2;x.fillStyle='#0b0d11';x.fillRect(e.x-e.s*.38,e.y-e.s*1.05+bob,e.s*.76,e.s*1.8);x.fillStyle='#273444';x.fillRect(e.x-e.s*.34,e.y-e.s*.75+bob,e.s*.68,e.s*1.15);x.fillStyle='#b8c4d0';x.beginPath();x.arc(e.x,e.y-e.s*.88+bob,e.s*.25,0,Math.PI*2);x.fill();x.fillStyle='#141b24';x.fillRect(e.x-e.s*.48,e.y-e.s*.65+bob,e.s*.96,5);x.fillStyle='#4b1116';x.fillRect(e.x-e.s*.35,e.y-e.s*1.35+bob,e.s*.7,4);x.fillStyle='#080a0e';x.fillRect(e.x-e.s*.06,e.y-e.s*.2+bob,e.s*.12,e.s*.7)}requestAnimationFrame(draw)}draw();
+addEventListener('keydown',e=>{keys[e.key.toLowerCase()]=1;if(e.key.toLowerCase()==='r'&&!reloading)reload()});addEventListener('keyup',e=>keys[e.key.toLowerCase()]=0);
+function reload(){if(ammo===30)return;reloading=true;setTimeout(()=>{ammo=30;reloading=false;ui()},700)}
+c.addEventListener('click',()=>{if(!playing)return;if(reloading||ammo<=0){if(ammo<=0)reload();return}ammo--;document.getElementById('flash').style.opacity=.22;setTimeout(()=>document.getElementById('flash').style.opacity=0,45);let best=null,bd=1e9;for(const e of enemies){if(!e.alive)continue;let d=Math.hypot(e.x-W/2,e.y-H/2);if(d<bd&&d<Math.min(W,H)*.35){best=e;bd=d}}if(best){best.h-=100; if(best.h<=0){best.alive=false;score+=100;showHit();setTimeout(spawn,450)}}ui()});
+function showHit(){let h=document.getElementById('hit');h.style.opacity=1;setTimeout(()=>h.style.opacity=0,350)}
+function ui(){document.getElementById('ammo').textContent=ammo+' / 120';document.getElementById('score').textContent='SCORE '+String(score).padStart(6,'0');document.getElementById('hp').textContent=hp;document.getElementById('bar').style.width=hp+'%'}
+setInterval(()=>{if(playing){let alive=enemies.filter(e=>e.alive).length;if(alive<4)spawn()}},2200);document.getElementById('start').onclick=()=>{playing=true;document.getElementById('menu').style.display='none';c.requestPointerLock?.();ui()};
+</script>
+</body>
+</html>
