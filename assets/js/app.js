@@ -1,17 +1,17 @@
 const PRODUCTS = [
  {id:1,name:"Lavender Floral Embroidered Lace",category:"Lace & Borders",price:null,tile:0,tag:"EMBROIDERED LACE",description:"Lavender floral lace trim with detailed bead and sequin embellishment."},
- {id:2,name:"Golden Floral Zari Lace",category:"Lace & Borders",price:null,tile:1,tag:"GOLD DETAIL",description:"Golden and ivory floral embroidered border for elegant finishing."},
- {id:3,name:"Pastel 4-Inch Embroidered Border",category:"Lace & Borders",price:null,tile:2,tag:"4-INCH BORDER",description:"Pastel floral border with delicate beadwork. Approximate width shown in the supplied product photo."},
+ {id:2,name:"Golden Floral Zari Lace",category:"Lace & Borders",price:null,tile:5,tag:"GOLD DETAIL",description:"Golden and ivory floral embroidered border for elegant finishing."},
+ {id:3,name:"Pastel 4-Inch Embroidered Border",category:"Lace & Borders",price:null,tile:7,tag:"4-INCH BORDER",description:"Pastel floral border with delicate beadwork. Approximate width shown in the supplied product photo."},
  {id:4,name:"Pink Floral Embroidered Border",category:"Lace & Borders",price:null,tile:3,tag:"PINK FLORAL",description:"Soft pink floral embroidery trim with a repeating vine pattern."},
- {id:5,name:"Red & Pink Rose Cross-Stitch Design",category:"Embroidery Designs",price:null,tile:4,tag:"ROSE DESIGN",description:"Rose bouquet embroidery pattern in red and pink shades."},
- {id:6,name:"Multicolour Rose Embroidery Design",category:"Embroidery Designs",price:null,tile:5,tag:"MULTICOLOUR",description:"Colourful rose bouquet embroidery pattern for decorative stitching."},
- {id:7,name:"Kids Transport Print Bag Set",category:"Bags & Accessories",price:null,tile:6,tag:"KIDS COLLECTION",description:"Blue transport-print kids bag set featuring vehicles and travel motifs."},
- {id:8,name:"White Pearl Floral Embroidered Lace",category:"Lace & Borders",price:null,tile:7,tag:"6-INCH BORDER",description:"White floral lace with pearl and bead embellishments. Approximate width shown in the supplied photo."},
- {id:9,name:"Beige Quilted Organizer Set",category:"Bags & Accessories",price:null,tile:8,tag:"ORGANIZER SET",description:"Beige patterned quilted organizer and matching accessories."},
- {id:10,name:"White & Gold Embroidered Topi",category:"Topi",price:null,tile:9,tag:"TOPI COLLECTION",description:"White topi featuring a gold embroidered decorative band."},
- {id:11,name:"Maroon Quilted Organizer Set",category:"Bags & Accessories",price:null,tile:10,tag:"ORGANIZER SET",description:"Maroon quilted organizer set with beige edging and matching pieces."},
- {id:12,name:"Blue Floral Quilted Bag Set",category:"Bags & Accessories",price:null,tile:11,tag:"FLORAL COLLECTION",description:"Blue quilted floral bag set with matching accessory pieces."},
- {id:13,name:"Pink & Cream Quilted Bag Set",category:"Bags & Accessories",price:null,tile:12,tag:"QUILTED COLLECTION",description:"Pink and cream quilted bag set with coordinated accessories."}
+ {id:5,name:"Red & Pink Rose Cross-Stitch Design",category:"Embroidery Designs",price:null,tile:11,tag:"ROSE DESIGN",description:"Rose bouquet embroidery pattern in red and pink shades."},
+ {id:6,name:"Multicolour Rose Embroidery Design",category:"Embroidery Designs",price:null,tile:8,tag:"MULTICOLOUR",description:"Colourful rose bouquet embroidery pattern for decorative stitching."},
+ {id:7,name:"Kids Transport Print Bag Set",category:"Bags & Accessories",price:null,tile:4,tag:"KIDS COLLECTION",description:"Blue transport-print kids bag set featuring vehicles and travel motifs."},
+ {id:8,name:"White Pearl Floral Embroidered Lace",category:"Lace & Borders",price:null,tile:2,tag:"6-INCH BORDER",description:"White floral lace with pearl and bead embellishments. Approximate width shown in the supplied photo."},
+ {id:9,name:"Beige Quilted Organizer Set",category:"Bags & Accessories",price:null,tile:12,tag:"ORGANIZER SET",description:"Beige patterned quilted organizer and matching accessories."},
+ {id:10,name:"White & Gold Embroidered Topi",category:"Topi",price:null,tile:6,tag:"TOPI COLLECTION",description:"White topi featuring a gold embroidered decorative band."},
+ {id:11,name:"Maroon Quilted Organizer Set",category:"Bags & Accessories",price:null,tile:1,tag:"ORGANIZER SET",description:"Maroon quilted organizer set with beige edging and matching pieces."},
+ {id:12,name:"Blue Floral Quilted Bag Set",category:"Bags & Accessories",price:null,tile:9,tag:"FLORAL COLLECTION",description:"Blue quilted floral bag set with matching accessory pieces."},
+ {id:13,name:"Pink & Cream Quilted Bag Set",category:"Bags & Accessories",price:null,tile:10,tag:"QUILTED COLLECTION",description:"Pink and cream quilted bag set with coordinated accessories."}
 ];
 const CART_KEY="hakimi-zari-house-cart";
 let cart=JSON.parse(localStorage.getItem(CART_KEY)||"[]").filter(x=>PRODUCTS.some(p=>p.id===x.id)),activeFilter="All",searchTerm="";
